@@ -1,0 +1,11 @@
+Dockerfile
+.dockerignore
+node_modules
+npm-debug.log
+README.md
+yarn.lock
+package.lock
+.next
+!.next/static
+!.next/standalone
+.git

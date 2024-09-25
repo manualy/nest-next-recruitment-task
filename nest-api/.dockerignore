@@ -1,0 +1,6 @@
+./test/*
+Dockerfile
+.dockerignore
+node_modules
+yarn.lock
+dist

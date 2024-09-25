@@ -1,0 +1,62 @@
+services:
+  nest:
+    build:
+      context: ./nest-api
+      dockerfile: Dockerfile
+    container_name: nest-api
+    develop:
+      watch:
+        - action: sync
+          path: ./nest-api/src
+          target: /user/src/app/src
+        - action: rebuild
+          path: ./nest-api/package.json
+    environment:
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/user/src/data
+    depends_on:
+      - db
+
+  next-app:
+    container_name: next-app
+    build:
+      context: ./next
+      dockerfile: Dockerfile
+    develop:
+      watch:
+        - action: sync
+          path: ./next/src
+          target: /user/src/app/src
+        - action: sync
+          path: ./next/public
+          target: /user/src/app/public
+        - action: rebuild
+          path: ./next/package.json
+    environment:
+      ENV_VARIABLE: development
+      NEXT_PUBLIC_ENV_VARIABLE: development
+    env_file:
+      - ./next/.env
+    restart: always
+    ports:
+      - 3001:3000
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=test_task
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+    container_name: postgres-db
+    volumes:
+      - tasktypescript_pg-volume:/var/lib/postgresql/data
+    ports:
+      - "5431:5432"
+
+volumes:
+  tasktypescript_pg-volume:
+    external: true

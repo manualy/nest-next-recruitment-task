@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=test_task
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+    container_name: postgres-job
+    volumes:
+      - tasktypescript_pg-volume:/var/lib/postgresql/data
+    ports:
+      - "5431:5432"
+
+volumes:
+  tasktypescript_pg-volume:
+    external: true

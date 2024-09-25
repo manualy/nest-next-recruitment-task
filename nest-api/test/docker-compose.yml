@@ -1,0 +1,16 @@
+services:
+  test-db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=test_task_test
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+    container_name: postgres-nest-job
+    volumes:
+      - pg-volume:/var/lib/postgresql/data
+    ports:
+      - '5435:5432'
+
+volumes:
+  pg-volume:

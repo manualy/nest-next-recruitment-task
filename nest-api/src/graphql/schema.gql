@@ -1,0 +1,116 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Campaign's creative"""
+type Creative {
+  id: Int!
+  size: String!
+  status: CreativeStatuss!
+  addedDate: Date!
+  changedDate: Date!
+}
+
+"""The status of the creative"""
+enum CreativeStatuss {
+  ACTIVE
+  PAUSED
+  NEW
+}
+
+"""Ad campaign."""
+type Campaign {
+  id: Int!
+  name: String!
+  budget: String!
+  startDate: Date!
+  endDate: Date!
+  status: CampaignStatus!
+  creatives: [Creative!]!
+  addedDate: Date!
+  changedDate: Date!
+}
+
+"""The status of the creative"""
+enum CampaignStatus {
+  ACTIVE
+  PAUSED
+  NEW
+}
+
+"""Campaign table data."""
+type CampaignTableRowData {
+  label: String!
+  amount: Float!
+}
+
+"""Ad campaign report."""
+type IndividualCampaignReportData {
+  currency: String!
+  budget: Float!
+  budgetSpent: Float!
+  campaign: Campaign!
+  tableData: [CampaignTableRowData!]!
+}
+
+"""Budget report."""
+type BudgetReport {
+  campaignsData: [IndividualCampaignReportData!]!
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+type Query {
+  generateReport(filters: BudgetReportFiltersInput!): BudgetReport!
+}
+
+input BudgetReportFiltersInput {
+  campaignIds: [Int!]!
+  creativeSizes: [Int!]
+  dimension: ReportDimension!
+  creativeStatus: CreativeStatuss
+  startDate: Date!
+  endDate: Date!
+}
+
+"""
+Represents different budget report dimensions that are available upon selection
+"""
+enum ReportDimension {
+  SIZE
+  DAY
+  MONTH
+  WEEK_NUMBER
+}
+
+type Mutation {
+  addCreative(campaignId: Float!, creativeId: Float!): Campaign!
+  updateCreative(id: Float!, creativeData: UpdateCreativeInput!): Creative!
+  batchActivate(ids: [Int!]!): Boolean!
+  addCampaign(campaignData: AddCampaignInput!): Campaign!
+  updateCampaign(id: Float!, campaignData: UpdateCampaignInput!): Campaign!
+  removeCreative(campaignId: Float!, creativeId: Float!): Campaign!
+}
+
+input UpdateCreativeInput {
+  status: CreativeStatuss!
+}
+
+input AddCampaignInput {
+  name: String!
+  budget: String!
+  creatives: [Int!]!
+  startDate: Date!
+  endDate: Date!
+  status: CampaignStatus!
+}
+
+input UpdateCampaignInput {
+  name: String
+  budget: String
+  creatives: [Int!]
+  startDate: Date
+  endDate: Date
+  status: CampaignStatus
+}
