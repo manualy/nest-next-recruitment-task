@@ -1,4 +1,4 @@
-# Daniel Świętuchowski - Rekrutacja
+# NestJS & NextJS recruitment task
 
 The project aims to facilitate budget reporting through a NestJS API, enabling efficient management of creative and campaign data. IT was done as a job recruitment task.
 
